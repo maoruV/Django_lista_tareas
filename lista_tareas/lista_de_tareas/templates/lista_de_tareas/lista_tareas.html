@@ -1,0 +1,79 @@
+   {% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Tareas</title>
+ 
+    <link rel="stylesheet" href="{% static 'lista_de_tareas/css/styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Mis Tareas</h1>
+
+        <form action="{% url 'lista_tareas' %}" method="get" class="search-form">
+            <input type="text" name="q" placeholder="Buscar por título o categoría..." value="{{ query }}">
+            <button type="submit">Buscar</button>
+        </form>
+
+        <form action="{% url 'lista_tareas' %}" method="post" class="add-form">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="id_titulo">Título:</label>
+                    <input type="text" id="id_titulo" name="titulo" required>
+                </div>
+                <div class="form-group">
+                    <label for="id_categoria">Categoría:</label>
+                    <select id="id_categoria" name="categoria">
+                        {% for key, value in categorias %}
+                        <option value="{{ key }}" {% if selected_category == key %}selected{% endif %}>{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="add-btn">Agregar Tarea</button>
+        </form>
+
+        <h2>Tareas Pendientes</h2>
+        <ul class="task-list">
+            {% for tarea in tareas_pendientes %}
+            <li class="task-item">
+                <form action="{% url 'toggle_completada' tarea.id %}" method="post" class="complete-form">
+                    {% csrf_token %}
+                    <input type="checkbox" onchange="this.form.submit()">
+                </form>
+                <span class="task-title">{{ tarea.titulo }}</span>
+                <span class="task-category">{{ tarea.get_categoria_display }}</span>
+                <div class="task-actions">
+                    <a href="{% url 'editar_tarea' tarea.id %}">Editar</a>
+                    <a href="{% url 'eliminar_tarea' tarea.id %}" onclick="return confirm('¿Estás seguro de que deseas eliminar esta tarea?');">Eliminar</a>
+                </div>
+            </li>
+            {% empty %}
+            <li class="no-tasks">No hay tareas pendientes. ¡Todo en orden!</li>
+            {% endfor %}
+        </ul>
+
+        <h2>Tareas Completadas</h2>
+        <ul class="task-list">
+            {% for tarea in tareas_completadas %}
+            <li class="task-item completed">
+                <form action="{% url 'toggle_completada' tarea.id %}" method="post" class="complete-form">
+                    {% csrf_token %}
+                    <input type="checkbox" checked onchange="this.form.submit()">
+                </form>
+                <span class="task-title">{{ tarea.titulo }}</span>
+                <span class="task-category">{{ tarea.get_categoria_display }}</span>
+                <div class="task-actions">
+                    <a href="{% url 'eliminar_tarea' tarea.id %}" onclick="return confirm('¿Estás seguro de que deseas eliminar esta tarea?');">Eliminar</a>
+                </div>
+            </li>
+            {% empty %}
+            <li class="no-tasks">No hay tareas completadas.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
