@@ -28,17 +28,17 @@ Crear tareas: Añade nuevas tareas con un título y una categoría.
 ### Configuración y Ejecución del Proyecto
 Sigue estos pasos para tener una copia local del proyecto en funcionamiento.
 
-####1. Requisitos Previos
+###1. Requisitos Previos
 Asegúrate de tener Python y pip instalados en tu sistema.
 
-####2. Clonar el Repositorio
+###2. Clonar el Repositorio
 Abre tu terminal y ejecuta el siguiente comando para clonar el proyecto desde GitHub:
 
 -- Bash
 
 git clone https://github.com/tu-usuario/nombre-del-repositorio.git
 cd nombre-del-repositorio
-####3. Crear un Entorno Virtual (Recomendado)
+###3. Crear un Entorno Virtual (Recomendado)
 Es una buena práctica crear un entorno virtual para aislar las dependencias del proyecto.
 
 -- Bash
@@ -50,7 +50,7 @@ Windows: venv\Scripts\activate
 
 macOS / Linux: source venv/bin/activate
 
-####4. Instalar Dependencias
+###4. Instalar Dependencias
 Instala todas las librerías necesarias para el proyecto:
 
 ### Bash
@@ -62,14 +62,14 @@ Si aún no tienes el archivo requirements.txt, puedes crearlo manualmente o usar
 
 pip install Django
 pip freeze > requirements.txt
-####5. Aplicar Migraciones
+###5. Aplicar Migraciones
 Las migraciones preparan la base de datos para que puedas empezar a usar los modelos.
 
 ### Bash
 
 python manage.py makemigrations
 python manage.py migrate
-####6. Ejecutar el Servidor
+###6. Ejecutar el Servidor
 Inicia el servidor de desarrollo local de Django:
 
 ### Bash
